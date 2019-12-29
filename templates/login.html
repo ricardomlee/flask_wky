@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+<div align="center">
+<h2>OneKeloud</h2>
+    {% if message %} {{message}} {% endif %}
+    <form method="POST">
+ 
+        <input type="password" name="pin" placeholder="pin">
+        <br>
+        <input type="text" name="magnet" placeholder="magnet">
+        <br>
+        <input type="submit" value="Submit">
+        <input type="reset" value="reset">
+    </form>
+</div>
+ 
+</body>
+</html>

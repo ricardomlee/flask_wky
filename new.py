@@ -1,31 +1,37 @@
-from flask import Flask,request,render_template,redirect
+from flask import Flask, request, url_for, redirect, flash, render_template
 import WanKeYunApi
 
 app = Flask(__name__)
-#绑定访问地址127.0.0.1:5000/user
+
+app.secret_key = '123456'
+
 @app.route("/",methods=['GET','POST'])
 def login():
     if request.method =='POST':
         
         pin = request.form['pin']
-        if pin != '9612':
-            message = "incorrect pin!"
-            return render_template('login.html',message=message)
+        if pin != '设置你的pin':
+            flash('incorrect pin!')
+            return redirect(url_for('login'))
         magnet = request.form['magnet']
 
         onething = WanKeYunApi.WanKeYunApi()
-        bok = onething.LoginEx(user='17092619612',passwd='liming1996')
+        bok = onething.LoginEx(user='你的用户名',passwd='你的密码')
         if bok is False:
-            return
+            flash('login failed!')
+            return redirect(url_for('login'))
         bok = onething.GetUSBInfo()
         if bok is False:
-            return
+            flash('get usb error!')
+            return redirect(url_for('login'))
         bok = onething.RemoteDlLogin()
         if bok is False:
-            return
+            flash('dl login failed!')
+            return redirect(url_for('login'))
         bok = onething.GetRemoteDlInfo()
         if bok is False:
-            return
+            flash('get dl info failed!')
+            return redirect(url_for('login'))
 
         JobList = []
         OneJob = {

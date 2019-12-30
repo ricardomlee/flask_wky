@@ -2,12 +2,24 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Document</title>
+    <title>OneKeloud</title>
 </head>
 <body>
 <div align="center">
 <h2>OneKeloud</h2>
     {% if message %} {{message}} {% endif %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        <ul class=flashes>
+        {% for category, message in messages %}
+            <li class="{{ category }}">{{ message }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+    {% endwith %}
+ 
+    {% block body %}
+    {% endblock %}
     <form method="POST">
  
         <input type="password" name="pin" placeholder="pin">
